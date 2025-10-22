@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Chef Portal</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <h1>This page is for chefs</h1>
+
+    <input type="file" id="input">
+    <img src="" id="output">
+
+
+
+    <!-- Client Code -->
+    <script type="text/javascript">
+
+
+
+        //let goToServer = document.querySelector("#kitchen");
+        //goToServer.addEventListener("click", goToChef)
+
+
+        //function goToChef() {
+        //    document.location = "chefPage.html"
+        //}
+
+
+        // Get WebSocket
+        var socket = io("https://websocket-test-app.onrender.com");
+
+        // Get DOM elements
+        var input = document.getElementById("input");
+        var output = document.getElementById("output");
+
+        // Join a channel
+        var room = "test";
+        socket.emit("join", room);
+
+        // Listen to file input events
+        document.getElementById("input").addEventListener("change", function (event) {
+
+            // Prepeare file reader
+            var file = event.target.files[0];
+            var fileReader = new FileReader();
+
+            fileReader.onloadend = function (event) {
+                // Send an image event to the socket
+                var image = event.target.result
+                output.src = image;
+                socket.emit("image", image);
+            };
+
+            // Read file
+            fileReader.readAsDataURL(file);
+        })
+
+        socket.on("image", function (image) {
+            output.src = image;
+        });
+    </script>
+</body>
+</html>

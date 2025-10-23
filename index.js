@@ -1,6 +1,8 @@
- const express = require("express");
+const platform = require('platform')
+const express = require("express");
  const socketIO = require("socket.io");
  const path = require("path");
+ 
  const PORT = process.env.PORT || 3000;
 const INDEX = path.join(__dirname, 'index.html');
 const CHEFPATH = path.join(__dirname, 'chefPage.html');
@@ -10,6 +12,12 @@ const CHEFPATH = path.join(__dirname, 'chefPage.html');
   .listen(PORT, () => console.log("Listening on localhost" + PORT));
 
  const io = socketIO(server);
+
+if (platform.isMobile) {
+  console.log("Mobile device detected");
+} else {
+  console.log("Desktop device detected");
+}
 
  io.on("connection", function(socket) {
    socket.on("join", function (room) {

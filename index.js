@@ -18,8 +18,19 @@ const CHEFPATH = path.join(__dirname, 'chefPage.html');
 //   .listen(PORT, () => console.log("Listening on localhost" + PORT));
 //  const chefIo = socketIO(chefServer);
 
+let device = '';
 
-if (platform.isMobile) {
+    if (navigator.userAgent.match(/Android/i)
+        || navigator.userAgent.match(/webOS/i)
+        || navigator.userAgent.match(/Windows Phone/i)) {
+        device = true;
+    } else {
+        device = false;
+    }
+    console.log(device);
+
+console.log(platform.isMobile)
+if (device) {
   const server = express()
    .use((req, res) => res.sendFile(CHEFPATH) )
   .listen(PORT, () => console.log("Listening on localhost" + PORT));

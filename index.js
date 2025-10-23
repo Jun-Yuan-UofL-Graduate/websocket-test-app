@@ -1,73 +1,63 @@
 const platform = require('platform')
 const express = require("express");
- const socketIO = require("socket.io");
- const path = require("path");
+const socketIO = require("socket.io");
+const path = require("path");
 
- const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 const INDEX = path.join(__dirname, 'index.html');
-const CHEFPATH = path.join(__dirname, 'chefPage.html');
+//const CHEFPATH = path.join(__dirname, 'chefPage.html');
 
 
-//  const server = express()
-//    .use((req, res) => res.sendFile(INDEX) )
-//   .listen(PORT, () => console.log("Listening on localhost" + PORT));
-//  const io = socketIO(server);
+ const server = express()
+   .use((req, res) => res.sendFile(INDEX) )
+  .listen(PORT, () => console.log("Listening on localhost" + PORT));
+ const io = socketIO(server);
 
 // const chefServer = express()
 //    .use((req, res) => res.sendFile(CHEFPATH) )
 //   .listen(PORT, () => console.log("Listening on localhost" + PORT));
 //  const chefIo = socketIO(chefServer);
 
-let device = '';
 
-    if (navigator.userAgent.match(/Android/i)
-        || navigator.userAgent.match(/webOS/i)
-        || navigator.userAgent.match(/Windows Phone/i)) {
-        device = true;
-    } else {
-        device = false;
-    }
-    console.log(device);
+// let device = '';
 
-console.log(platform.isMobile)
-if (device) {
-  const server = express()
-   .use((req, res) => res.sendFile(CHEFPATH) )
-  .listen(PORT, () => console.log("Listening on localhost" + PORT));
- const io = socketIO(server);
-  console.log("Mobile device detected");
-} else {
-const server = express()
-   .use((req, res) => res.sendFile(INDEX) )
-  .listen(PORT, () => console.log("Listening on localhost" + PORT));
- const io = socketIO(server);
-  console.log("Desktop device detected");
-}
+//     if (navigator.userAgent.match(/Android/i)
+//         || navigator.userAgent.match(/webOS/i)
+//         || navigator.userAgent.match(/Windows Phone/i)) {
+//         device = true;
+//     } else {
+//         device = false;
+//     }
+//     console.log(device);
 
 
-// if (platform.isMobile) {
-//   chefIo.on("connection", function(socket) {
-//    socket.on("join", function (room) {
-//      socket.join(room)
-//      socket.on("image", function(msg) {
-//        socket.broadcast.to(room).emit("image", msg);
-//      });
-//    })
-//  });
+// console.log(platform.isMobile)
+// if (device) {
+//   const server = express()
+//    .use((req, res) => res.sendFile(CHEFPATH) )
+//   .listen(PORT, () => console.log("Listening on localhost" + PORT));
+//  const io = socketIO(server);
 //   console.log("Mobile device detected");
 // } else {
-//   io.on("connection", function(socket) {
-//    socket.on("join", function (room) {
-//      socket.join(room)
-//      socket.on("image", function(msg) {
-//        socket.broadcast.to(room).emit("image", msg);
-//      });
-//    })
-//  });
+// const server = express()
+//    .use((req, res) => res.sendFile(INDEX) )
+//   .listen(PORT, () => console.log("Listening on localhost" + PORT));
+//  const io = socketIO(server);
 //   console.log("Desktop device detected");
 // }
 
-
+io.on("connection", function(socket) {
+  // Register "join" events, requested by a connected client
+  socket.on("join", function (room) {
+    // join channel provided by client
+    socket.join(room)
+    // Register "image" events, sent by the client
+    socket.on("image", function(msg) {
+      // Broadcast the "image" event to all other clients in the room
+      socket.broadcast.to(room).emit("image", msg);
+    });
+  })
+});
 
 
 //const express = require('express'); //requires express module

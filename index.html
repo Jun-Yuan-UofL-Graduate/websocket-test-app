@@ -14,9 +14,7 @@
 
     <input type="button" id="server" value="I am a Server">
     <!--<input type="button" id="kitchen" value="I am a Chef">-->
-
-      <button id="kitchen">I am a Chef</button>
-
+    <button id="kitchen">I am a Chef</button>
 
 
     <p id="deskMessage">This message is for desktop</p>
@@ -26,55 +24,34 @@
     <input type="file" id="input">
     <img src="" id="output">
 
+
     <!-- Client Code -->
-    <script type="text/javascript">
+<script type="text/javascript">
 
 var elements = document.getElementById("deskMessage");
             elements.style.display = 'show';
 var elements = document.getElementById("mobMessage");
             elements.style.display = 'show';
 
-let device = '';
+// let device = '';
 
-    if (navigator.userAgent.match(/Android/i)
-        || navigator.userAgent.match(/webOS/i)
-        || navigator.userAgent.match(/Windows Phone/i)) {
-        device = true;
-    } else {
-        device = false;
-    }
-    console.log(device);
+//     if (navigator.userAgent.match(/Android/i)
+//         || navigator.userAgent.match(/webOS/i)
+//         || navigator.userAgent.match(/Windows Phone/i)) {
+//         device = true;
+//     } else {
+//         device = false;
+//     }
+//     console.log(device);
 
-    if(device == true){
-      var elements = document.getElementById("deskMessage");
-            elements.style.display = 'none';
-    }else{
-      var elements = document.getElementById("mobMessage");
-      elements.style.display = 'none';
-    }
-        var agent = navigator.userAgent;
-        var isWebkit = (agent.indexOf("AppleWebKit") > 0);
-        var isAndroid = (agent.indexOf("Android") > 0);
-        var isWebOS = (agent.indexOf("webOS") > 0);
-        var isWindowsMobile = (agent.indexOf("IEMobile") > 0);
-        var isSmallScreen = (screen.width < 767 || (isAndroid && screen.width < 1000));
-        var isUnknownMobile = (isWebkit && isSmallScreen);
-        var isMobile = (isAndroid || isWebOS || isWindowsMobile || isUnknownMobile);
-
-        var elements = document.getElementById("mobMessage");
-        //elements.style.display = 'none';
-        if (isMobile && isSmallScreen && document.cookie.indexOf("mobileFullSiteClicked=") < 0) {
-            //mobileRedirect();
-
-            //console.log("This is a computer");
-            var elements = document.getElementById("mobMessage");
-            //elements.style.display = 'show';
-        } 
-        //} else {
-        //    var elements = document.getElementById("mobMessage");
-        //    elements.style.display = 'none';
-        //}
-
+//     if(device == true){
+//       var elements = document.getElementById("deskMessage");
+//             elements.style.display = 'none';
+//     }else{
+//       var elements = document.getElementById("mobMessage");
+//       elements.style.display = 'none';
+//     }
+     
 
         //const express = require("express");
         //const socketIO = require("socket.io");
@@ -90,27 +67,25 @@ let device = '';
         //const io = socketIO(server);
 
 
-        let goToServer = document.querySelector("#kitchen");
+        // let goToServer = document.querySelector("#kitchen");
+        // goToServer.addEventListener("click", goToChef)
+        // function goToChef() {
+        //     //document.location = "chefPage.html"
 
-        goToServer.addEventListener("click", goToChef)
-
-        
-        function goToChef() {
-            //document.location = "chefPage.html"
-
-            io.on("connection", function (socket) {
-                socket.on("join", function (room) {
-                    socket.join(room)
-                    socket.on("image", function (msg) {
-                        socket.broadcast.to(room).emit("image", msg);
-                    });
-                })
-            });
-        }
+        //     io.on("connection", function (socket) {
+        //         socket.on("join", function (room) {
+        //             socket.join(room)
+        //             socket.on("image", function (msg) {
+        //                 socket.broadcast.to(room).emit("image", msg);
+        //             });
+        //         })
+        //     });
+        // }
 
 
       // Get WebSocket
-      var socket = io("https://websocket-test-app.onrender.com");
+      //var socket = io("https://websocket-test-app.onrender.com");
+      var socket = io();
 
       // Get DOM elements
       var input = document.getElementById("input");

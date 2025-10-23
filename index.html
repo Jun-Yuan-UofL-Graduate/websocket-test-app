@@ -19,6 +19,8 @@
 
 
 
+    <p id="deskMessage">This message is for desktop</p>
+
     <p id="mobMessage">This message is only for mobile users</p>
 
     <input type="file" id="input">
@@ -27,7 +29,29 @@
     <!-- Client Code -->
     <script type="text/javascript">
 
+// var elements = document.getElementById("deskMessage");
+//             elements.style.display = 'show';
+// var elements = document.getElementById("mobMessage");
+//             elements.style.display = 'none';
 
+let device = '';
+
+    if (navigator.userAgent.match(/Android/i)
+        || navigator.userAgent.match(/webOS/i)
+        || navigator.userAgent.match(/Windows Phone/i)) {
+        device = true;
+    } else {
+        device = false;
+    }
+    console.log(device);
+
+    if(device == true){
+      var elements = document.getElementById("deskMessage");
+            elements.style.display = 'none';
+    }else{
+var elements = document.getElementById("mobMessage");
+            elements.style.display = 'none';
+    }
         var agent = navigator.userAgent;
         var isWebkit = (agent.indexOf("AppleWebKit") > 0);
         var isAndroid = (agent.indexOf("Android") > 0);

@@ -2,31 +2,59 @@ const platform = require('platform')
 const express = require("express");
  const socketIO = require("socket.io");
  const path = require("path");
- 
+
  const PORT = process.env.PORT || 3000;
 const INDEX = path.join(__dirname, 'index.html');
 const CHEFPATH = path.join(__dirname, 'chefPage.html');
 
- const server = express()
-   .use((req, res) => res.sendFile(INDEX) )
-  .listen(PORT, () => console.log("Listening on localhost" + PORT));
 
- const io = socketIO(server);
+//  const server = express()
+//    .use((req, res) => res.sendFile(INDEX) )
+//   .listen(PORT, () => console.log("Listening on localhost" + PORT));
+//  const io = socketIO(server);
+
+// const chefServer = express()
+//    .use((req, res) => res.sendFile(CHEFPATH) )
+//   .listen(PORT, () => console.log("Listening on localhost" + PORT));
+//  const chefIo = socketIO(chefServer);
+
 
 if (platform.isMobile) {
+  const server = express()
+   .use((req, res) => res.sendFile(CHEFPATH) )
+  .listen(PORT, () => console.log("Listening on localhost" + PORT));
+ const io = socketIO(server);
   console.log("Mobile device detected");
 } else {
+const server = express()
+   .use((req, res) => res.sendFile(INDEX) )
+  .listen(PORT, () => console.log("Listening on localhost" + PORT));
+ const io = socketIO(server);
   console.log("Desktop device detected");
 }
 
- io.on("connection", function(socket) {
-   socket.on("join", function (room) {
-     socket.join(room)
-     socket.on("image", function(msg) {
-       socket.broadcast.to(room).emit("image", msg);
-     });
-   })
- });
+
+// if (platform.isMobile) {
+//   chefIo.on("connection", function(socket) {
+//    socket.on("join", function (room) {
+//      socket.join(room)
+//      socket.on("image", function(msg) {
+//        socket.broadcast.to(room).emit("image", msg);
+//      });
+//    })
+//  });
+//   console.log("Mobile device detected");
+// } else {
+//   io.on("connection", function(socket) {
+//    socket.on("join", function (room) {
+//      socket.join(room)
+//      socket.on("image", function(msg) {
+//        socket.broadcast.to(room).emit("image", msg);
+//      });
+//    })
+//  });
+//   console.log("Desktop device detected");
+// }
 
 
 

@@ -29,10 +29,10 @@
     <!-- Client Code -->
     <script type="text/javascript">
 
-// var elements = document.getElementById("deskMessage");
-//             elements.style.display = 'show';
-// var elements = document.getElementById("mobMessage");
-//             elements.style.display = 'none';
+var elements = document.getElementById("deskMessage");
+            elements.style.display = 'show';
+var elements = document.getElementById("mobMessage");
+            elements.style.display = 'show';
 
 let device = '';
 
@@ -49,8 +49,8 @@ let device = '';
       var elements = document.getElementById("deskMessage");
             elements.style.display = 'none';
     }else{
-var elements = document.getElementById("mobMessage");
-            elements.style.display = 'none';
+      var elements = document.getElementById("mobMessage");
+      elements.style.display = 'none';
     }
         var agent = navigator.userAgent;
         var isWebkit = (agent.indexOf("AppleWebKit") > 0);
@@ -62,13 +62,13 @@ var elements = document.getElementById("mobMessage");
         var isMobile = (isAndroid || isWebOS || isWindowsMobile || isUnknownMobile);
 
         var elements = document.getElementById("mobMessage");
-        elements.style.display = 'none';
+        //elements.style.display = 'none';
         if (isMobile && isSmallScreen && document.cookie.indexOf("mobileFullSiteClicked=") < 0) {
             //mobileRedirect();
 
             //console.log("This is a computer");
             var elements = document.getElementById("mobMessage");
-            elements.style.display = 'show';
+            //elements.style.display = 'show';
         } 
         //} else {
         //    var elements = document.getElementById("mobMessage");

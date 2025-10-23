@@ -33,39 +33,24 @@ var elements = document.getElementById("deskMessage");
 var elements = document.getElementById("mobMessage");
             elements.style.display = 'show';
 
-// let device = '';
+let device = '';
 
-//     if (navigator.userAgent.match(/Android/i)
-//         || navigator.userAgent.match(/webOS/i)
-//         || navigator.userAgent.match(/Windows Phone/i)) {
-//         device = true;
-//     } else {
-//         device = false;
-//     }
-//     console.log(device);
+    if (navigator.userAgent.match(/Android/i)
+        || navigator.userAgent.match(/webOS/i)
+        || navigator.userAgent.match(/Windows Phone/i)) {
+        device = true;
+    } else {
+        device = false;
+    }
+    console.log(device);
 
-//     if(device == true){
-//       var elements = document.getElementById("deskMessage");
-//             elements.style.display = 'none';
-//     }else{
-//       var elements = document.getElementById("mobMessage");
-//       elements.style.display = 'none';
-//     }
-     
-
-        //const express = require("express");
-        //const socketIO = require("socket.io");
-        //const path = require("path");
-        //const PORT = process.env.PORT || 3000;
-        ////const INDEX = path.join(__dirname, 'index.html');
-        //const CHEFPATH = path.join(__dirname, 'chefPage.html');
-
-        //const server = express()
-        //    .use((req, res) => res.sendFile(INDEX))
-        //    .listen(PORT, () => console.log("Listening on localhost" + PORT));
-
-        //const io = socketIO(server);
-
+    if(device == true){
+      var elements = document.getElementById("deskMessage");
+            elements.style.display = 'none';
+    }else{
+      var elements = document.getElementById("mobMessage");
+      elements.style.display = 'none';
+    }
 
         // let goToServer = document.querySelector("#kitchen");
         // goToServer.addEventListener("click", goToChef)
@@ -84,8 +69,8 @@ var elements = document.getElementById("mobMessage");
 
 
       // Get WebSocket
-      //var socket = io("https://websocket-test-app.onrender.com");
-      var socket = io();
+      var socket = io("https://websocket-test-app.onrender.com");
+      //var socket = io();
 
       // Get DOM elements
       var input = document.getElementById("input");

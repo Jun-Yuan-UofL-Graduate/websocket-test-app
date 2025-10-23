@@ -13,12 +13,6 @@ const INDEX = path.join(__dirname, 'index.html');
   .listen(PORT, () => console.log("Listening on localhost" + PORT));
  const io = socketIO(server);
 
-// const chefServer = express()
-//    .use((req, res) => res.sendFile(CHEFPATH) )
-//   .listen(PORT, () => console.log("Listening on localhost" + PORT));
-//  const chefIo = socketIO(chefServer);
-
-
 // let device = '';
 
 //     if (navigator.userAgent.match(/Android/i)

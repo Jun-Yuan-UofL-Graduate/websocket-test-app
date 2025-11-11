@@ -13,11 +13,12 @@
 
     <!-- File input and image output -->
     <div id="mobileUI">
-      <h1>Welcome to the Restaurant</h1>
+      <h1>Welcome to the Restaurant, Server</h1>
       <!-- <p id="deskMessage">This message is for desktop</p> -->
-      <p id="mobMessage">This message is only for mobile users</p>
+      <!-- <p id="mobMessage">This message is only for mobile users</p> -->
 
-      <label id="server_label">Enter your Name</label>
+      
+      <label for="server_name" id="server_label">Enter your Name</label>
       <input type="text" id="server_name" name="server_name">
       <input type="submit" id="server_submit">
 
@@ -44,28 +45,28 @@
       <form action="" id="menu">
         <h2>Appitezers</h2>
           <div class="menu-item">
-            <label id="label_1">Item 1: </label>
+            <label for="item_1" id="label_1">Item 1: </label>
             <input type="number" id="item_1" name="item_1">
           </div>
           <div class="menu-item">
-            <label id="label_2">Item 2: </label>
+            <label for="item_2" id="label_2">Item 2: </label>
             <input type="number" id="item_2" name="item_2">
           </div>
           <div class="menu-item">
-            <label id="label_3">Item 3: </label>
+            <label for="item_3" id="label_3">Item 3: </label>
             <input type="number" id="item_3" name="item_3">
           </div>
         <h2>Drinks</h2>
           <div class="menu-item">
-            <label id="label_4">Item 4: </label>
+            <label for="item_4" id="label_4">Item 4: </label>
             <input type="number" id="item_4" name="item_4">
           </div>
           <div class="menu-item">
-            <label id="label_5">Item 5: </label>
+            <label for="item_5" id="label_5">Item 5: </label>
             <input type="number" id="item_5" name="item_5">
           </div>
           <div class="menu-item">
-            <label id="label_6">Item 6: </label>
+            <label for="item_6" id="label_6">Item 6: </label>
             <input type="number" id="item_6" name="item_6">
           </div>
         <!-- <h2>Entree</h2>
@@ -116,17 +117,19 @@
 
     
     <div id="desktopUI">
-      <h1>Welcome to the Restaurant</h1>
+      <h1>Welcome to the Restaurant, Chef</h1>
 
-      <p id="deskMessage">This message is for desktop</p>
-      <p id="mobMessage">This message is only for mobile users</p>
+      <!-- <p id="deskMessage">This message is for desktop</p> -->
+      <!-- <p id="mobMessage">This message is only for mobile users</p> -->
 
       <input type="file" id="input">
       <img src="" id="output">
 
+      
       <div id="message_log"></div>
 
       <p>Current Servers: </p>
+
       <select name="users" id="users"></select>
       <input type="submit" id="alert-server">
 
@@ -136,40 +139,23 @@
     </div>
     
 
-
-
-    
-
-
-      <!-- <h1>Welcome to the Restaurant</h1>
-
-      <p id="deskMessage">This message is for desktop</p>
+      <!-- Currently Unused Ideas -->
+      <!-- <p id="deskMessage">This message is for desktop</p>
       <p id="mobMessage">This message is only for mobile users</p>
-
-      <input type="file" id="input">
-      <img src="" id="output">
-
-      <div id="message_log"></div>
-
-
-      <p>Current Servers: </p>
-      <select name="users" id="users"></select>
-      <input type="submit" id="alert-server"> 
-      
       <input type="button" id="server" value="I am a Server"> 
       <input type="button" id="kitchen" value="I am a Chef">
-      <button id="kitchen">I am a Chef</button>
-      -->
+      <button id="kitchen">I am a Chef</button> -->
+     
 
 
     
     <!-- Client Code -->
 <script type="text/javascript">
 
-var elements = document.getElementById("deskMessage");
-            elements.style.display = 'show';
-var elements = document.getElementById("mobMessage");
-            elements.style.display = 'show';
+// var elements = document.getElementById("deskMessage");
+//             elements.style.display = 'show';
+// var elements = document.getElementById("mobMessage");
+//             elements.style.display = 'show';
 
 let device = '';
 
@@ -186,23 +172,31 @@ let device = '';
     }
     console.log(device);
 
-    if(device == true){
-      var elements = document.getElementById("deskMessage");
-            elements.style.display = 'none';
-      var elements = document.getElementById("desktopUI");
-            elements.style.display = 'none';
-    }else{
-      // var elements = document.getElementById("deskMessage");
-      //       elements.style.display = 'none';
-      // var elements = document.getElementById("desktopUI");
-      //       elements.style.display = 'none';
 
 
-      var elements = document.getElementById("mobMessage");
-      elements.style.display = 'none';
-      var elements = document.getElementById("mobileUI");
-            elements.style.display = 'none';
+    var debugMode = true;
+
+
+
+    if(debugMode == false){
+      if(device == true){
+            // var elements = document.getElementById("deskMessage");
+            //       elements.style.display = 'none';
+
+            var elements = document.querySelector("#desktopUI");
+                  elements.style.display = 'none';
+      }else{
+            // var elements = document.getElementById("deskMessage");
+            //       elements.style.display = 'none';
+
+            // var elements = document.getElementById("mobMessage");
+            // elements.style.display = 'none';
+
+            var elements = document.querySelector("#mobileUI");
+                  elements.style.display = 'none';
+      }
     }
+    
 
         // let goToServer = document.querySelector("#kitchen");
         // goToServer.addEventListener("click", goToChef)
@@ -232,6 +226,7 @@ let device = '';
       var chefNotes = document.getElementById("chefNotes");
       var table = document.querySelector("#tables");
       const menuSize = document.querySelectorAll('#menu .menu-item').length
+      const menu = document.querySelector("#menu");
 
       function createOrder(){
         var order = [];
@@ -246,7 +241,6 @@ let device = '';
             labelItem = labelItem.slice(0, -2)
             console.log(menuItem + " x " + labelItem)
             order.push(menuItem + " x " + labelItem)
-            menuItem = "";
           }
           
         }
@@ -257,7 +251,8 @@ let device = '';
       }
 
       function createMessage(text, ownMessage = false) {
-        console.log("Gonna create message: " + text)
+        //console.log("Gonna create message: " + text)
+
         // const messageElement = document.createElement("div");
         const messageElement = document.createElement("ul");
         messageElement.className = "chat-message";
@@ -281,7 +276,7 @@ let device = '';
         //messageElement.appendChild(subMesssageElement)
       }
 
-      var chefBtn = document.getElementById("chefBtn").addEventListener("click", () => {
+      var chefBtn = document.querySelector("#chefBtn").addEventListener("click", () => {
         if(table.value == ""){
           console.log("Error! No table selected")
           document.querySelector("#notice").innerText = "Error! Select a table"
@@ -304,9 +299,10 @@ let device = '';
           if (chefNotes.value != "" ){
             socket.emit("send-message", chefNotes.value);
             createMessage(chefNotes.value, true);
-            chefNotes.value = "";
           }
 
+          menu.reset();
+          table.value = "";
         }
 
         

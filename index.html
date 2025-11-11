@@ -57,18 +57,18 @@
           </div>
         <h2>Drinks</h2>
           <div class="menu-item">
-            <label>Item 4: </label>
-            <input type="number" name="">
+            <label id="label_4">Item 4: </label>
+            <input type="number" id="item_4" name="item_4">
           </div>
           <div class="menu-item">
-            <label>Item 5: </label>
-            <input type="number" name="">
+            <label id="label_5">Item 5: </label>
+            <input type="number" id="item_5" name="item_5">
           </div>
           <div class="menu-item">
-            <label>Item 6: </label>
-            <input type="number" name="">
+            <label id="label_6">Item 6: </label>
+            <input type="number" id="item_6" name="item_6">
           </div>
-        <h2>Entree</h2>
+        <!-- <h2>Entree</h2>
           <div class="menu-item">
             <label>Item 7: </label>
             <input type="number" name="">
@@ -97,7 +97,7 @@
           <div class="menu-item">
             <label>Item 13: </label>
             <input type="number" name="">
-          </div>
+          </div> -->
 
           <div class="special-request">
             <p>Notes to Chef</p>
@@ -118,23 +118,21 @@
     <div id="desktopUI">
       <h1>Welcome to the Restaurant</h1>
 
-      <!-- <input type="button" id="server" value="I am a Server"> -->
-      <!--<input type="button" id="kitchen" value="I am a Chef">-->
-      <!-- <button id="kitchen">I am a Chef</button> -->
-
       <p id="deskMessage">This message is for desktop</p>
-      <!-- <p id="mobMessage">This message is only for mobile users</p> -->
+      <p id="mobMessage">This message is only for mobile users</p>
 
       <input type="file" id="input">
       <img src="" id="output">
 
       <div id="message_log"></div>
 
-
       <p>Current Servers: </p>
       <select name="users" id="users"></select>
       <input type="submit" id="alert-server">
 
+      <!-- <input type="button" id="server" value="I am a Server">
+      <input type="button" id="kitchen" value="I am a Chef">
+      <button id="kitchen">I am a Chef</button> -->
     </div>
     
 
@@ -144,10 +142,6 @@
 
 
       <!-- <h1>Welcome to the Restaurant</h1>
-
-      <input type="button" id="server" value="I am a Server"> 
-      <input type="button" id="kitchen" value="I am a Chef">
-      <button id="kitchen">I am a Chef</button>
 
       <p id="deskMessage">This message is for desktop</p>
       <p id="mobMessage">This message is only for mobile users</p>
@@ -160,7 +154,12 @@
 
       <p>Current Servers: </p>
       <select name="users" id="users"></select>
-      <input type="submit" id="alert-server"> -->
+      <input type="submit" id="alert-server"> 
+      
+      <input type="button" id="server" value="I am a Server"> 
+      <input type="button" id="kitchen" value="I am a Chef">
+      <button id="kitchen">I am a Chef</button>
+      -->
 
 
     
@@ -258,6 +257,7 @@ let device = '';
       }
 
       function createMessage(text, ownMessage = false) {
+        console.log("Gonna create message: " + text)
         // const messageElement = document.createElement("div");
         const messageElement = document.createElement("ul");
         messageElement.className = "chat-message";

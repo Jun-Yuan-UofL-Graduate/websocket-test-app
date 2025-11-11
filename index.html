@@ -4,27 +4,166 @@
     <meta charset="utf-8">
     <title>SocketIO Client</title>
     <script src="/socket.io/socket.io.js"></script>
+    <style>
+
+
+    </style>
   </head>
   <body>
 
     <!-- File input and image output -->
+    <div id="mobileUI">
+      <h1>Welcome to the Restaurant</h1>
+      <!-- <p id="deskMessage">This message is for desktop</p> -->
+      <p id="mobMessage">This message is only for mobile users</p>
 
-    <h1>Welcome to the Restaurant</h1>
-    <p>Who Are You?</p>
+      <label id="server_label">Enter your Name</label>
+      <input type="text" id="server_name" name="server_name">
+      <input type="submit" id="server_submit">
 
-    <input type="button" id="server" value="I am a Server">
-    <!--<input type="button" id="kitchen" value="I am a Chef">-->
-    <button id="kitchen">I am a Chef</button>
+      <p id="notice"></p>
 
-
-    <p id="deskMessage">This message is for desktop</p>
-
-    <p id="mobMessage">This message is only for mobile users</p>
-
-    <input type="file" id="input">
-    <img src="" id="output">
+      <input type="file" id="input">
+      <img src="" id="output">
 
 
+      <!-- <input type="button" id="server" value="I am a Server"> -->
+      <!-- <input type="button" id="kitchen" value="I am a Chef"> -->
+      <!-- <a href="/chefPage">I am a Chef</a> -->
+      <!-- <button id="kitchen">I am a Chef</button> -->
+
+      <p>Currently serving table: </p>
+      <select name="tables" id="tables">
+        <option value="">--Select a table--</option>
+        <option value="table1">Table 1</option>
+        <option value="table2">Table 2</option>
+        <option value="table3">Table 3</option>
+        <option value="table4">Table 4</option>
+        <option value="table5">Table 5</option>
+      </select>
+      <form action="" id="menu">
+        <h2>Appitezers</h2>
+          <div class="menu-item">
+            <label id="label_1">Item 1: </label>
+            <input type="number" id="item_1" name="item_1">
+          </div>
+          <div class="menu-item">
+            <label id="label_2">Item 2: </label>
+            <input type="number" id="item_2" name="item_2">
+          </div>
+          <div class="menu-item">
+            <label id="label_3">Item 3: </label>
+            <input type="number" id="item_3" name="item_3">
+          </div>
+        <h2>Drinks</h2>
+          <div class="menu-item">
+            <label>Item 4: </label>
+            <input type="number" name="">
+          </div>
+          <div class="menu-item">
+            <label>Item 5: </label>
+            <input type="number" name="">
+          </div>
+          <div class="menu-item">
+            <label>Item 6: </label>
+            <input type="number" name="">
+          </div>
+        <h2>Entree</h2>
+          <div class="menu-item">
+            <label>Item 7: </label>
+            <input type="number" name="">
+          </div>
+          <div class="menu-item">
+            <label>Item 8: </label>
+            <input type="number" name="">
+          </div>
+          <div class="menu-item">
+            <label>Item 9: </label>
+            <input type="number" name="">
+          </div>
+          <div class="menu-item">
+            <label>Item 10: </label>
+            <input type="number" name="">
+          </div>
+        <h2>Dessert</h2>
+          <div class="menu-item">
+            <label>Item 11: </label>
+            <input type="number" name="">
+          </div>
+          <div class="menu-item">
+            <label>Item 12: </label>
+            <input type="number" name="">
+          </div>
+          <div class="menu-item">
+            <label>Item 13: </label>
+            <input type="number" name="">
+          </div>
+
+          <div class="special-request">
+            <p>Notes to Chef</p>
+             <textarea id="chefNotes" name="chefNotes" rows="5" cols="30"></textarea>
+          </div>
+      </form>
+      
+        
+
+      <button id="chefBtn">Send to Kitchen</button>
+    </div>
+
+
+
+    <!-- <div id="message_log"></div> -->
+
+    
+    <div id="desktopUI">
+      <h1>Welcome to the Restaurant</h1>
+
+      <!-- <input type="button" id="server" value="I am a Server"> -->
+      <!--<input type="button" id="kitchen" value="I am a Chef">-->
+      <!-- <button id="kitchen">I am a Chef</button> -->
+
+      <p id="deskMessage">This message is for desktop</p>
+      <!-- <p id="mobMessage">This message is only for mobile users</p> -->
+
+      <input type="file" id="input">
+      <img src="" id="output">
+
+      <div id="message_log"></div>
+
+
+      <p>Current Servers: </p>
+      <select name="users" id="users"></select>
+      <input type="submit" id="alert-server">
+
+    </div>
+    
+
+
+
+    
+
+
+      <!-- <h1>Welcome to the Restaurant</h1>
+
+      <input type="button" id="server" value="I am a Server"> 
+      <input type="button" id="kitchen" value="I am a Chef">
+      <button id="kitchen">I am a Chef</button>
+
+      <p id="deskMessage">This message is for desktop</p>
+      <p id="mobMessage">This message is only for mobile users</p>
+
+      <input type="file" id="input">
+      <img src="" id="output">
+
+      <div id="message_log"></div>
+
+
+      <p>Current Servers: </p>
+      <select name="users" id="users"></select>
+      <input type="submit" id="alert-server"> -->
+
+
+    
     <!-- Client Code -->
 <script type="text/javascript">
 
@@ -37,6 +176,10 @@ let device = '';
 
     if (navigator.userAgent.match(/Android/i)
         || navigator.userAgent.match(/webOS/i)
+        || navigator.userAgent.match(/iPhone/i)
+        || navigator.userAgent.match(/iPad/i)
+        || navigator.userAgent.match(/iPod/i)
+        || navigator.userAgent.match(/BlackBerry/i)
         || navigator.userAgent.match(/Windows Phone/i)) {
         device = true;
     } else {
@@ -47,9 +190,19 @@ let device = '';
     if(device == true){
       var elements = document.getElementById("deskMessage");
             elements.style.display = 'none';
+      var elements = document.getElementById("desktopUI");
+            elements.style.display = 'none';
     }else{
+      // var elements = document.getElementById("deskMessage");
+      //       elements.style.display = 'none';
+      // var elements = document.getElementById("desktopUI");
+      //       elements.style.display = 'none';
+
+
       var elements = document.getElementById("mobMessage");
       elements.style.display = 'none';
+      var elements = document.getElementById("mobileUI");
+            elements.style.display = 'none';
     }
 
         // let goToServer = document.querySelector("#kitchen");
@@ -75,6 +228,120 @@ let device = '';
       // Get DOM elements
       var input = document.getElementById("input");
       var output = document.getElementById("output");
+
+      const messageBox = document.querySelector("#message_log");
+      var chefNotes = document.getElementById("chefNotes");
+      var table = document.querySelector("#tables");
+      const menuSize = document.querySelectorAll('#menu .menu-item').length
+
+      function createOrder(){
+        var order = [];
+        var item = "";
+        
+
+        for (i = 1; i < menuSize + 1; i++){
+          var menuItem = document.querySelector("#item_" + i.toString()).value;
+          var labelItem = document.querySelector("#label_" + i.toString()).innerHTML;
+
+          if(menuItem != ""){
+            labelItem = labelItem.slice(0, -2)
+            console.log(menuItem + " x " + labelItem)
+            order.push(menuItem + " x " + labelItem)
+            menuItem = "";
+          }
+          
+        }
+        
+        console.log(order)
+
+        return order;
+      }
+
+      function createMessage(text, ownMessage = false) {
+        // const messageElement = document.createElement("div");
+        const messageElement = document.createElement("ul");
+        messageElement.className = "chat-message";
+
+        //const subMesssageElement = document.createElement("div");
+
+        const subMesssageElement = document.createElement("div");
+        subMesssageElement.className =
+          "px-4 py-4 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600";
+        if (ownMessage) {
+          subMesssageElement.className += " float-right bg-blue-800 text-white";
+        }
+        subMesssageElement.innerText = text;
+        messageElement.appendChild(subMesssageElement);
+
+        
+
+        messageBox.appendChild(messageElement);
+
+        //subMesssageElement.innerText = "How is this?";
+        //messageElement.appendChild(subMesssageElement)
+      }
+
+      var chefBtn = document.getElementById("chefBtn").addEventListener("click", () => {
+        if(table.value == ""){
+          console.log("Error! No table selected")
+          document.querySelector("#notice").innerText = "Error! Select a table"
+        }else{
+
+          console.log(table.value)
+          console.log(table.options[table.selectedIndex].text)
+        console.log("Send to Chef")
+        var holdThis = createOrder();
+        //console.log(holdThis);
+
+          socket.emit("send-message", table.options[table.selectedIndex].text)
+          createMessage(table.options[table.selectedIndex].text, true);
+
+          for (i = 0; i < holdThis.length; i ++){
+            socket.emit("send-message", holdThis[i])
+            createMessage(holdThis[i], true)
+          }
+
+          if (chefNotes.value != "" ){
+            socket.emit("send-message", chefNotes.value);
+            createMessage(chefNotes.value, true);
+            chefNotes.value = "";
+          }
+
+        }
+
+        
+      });
+
+      socket.on("connection", (socket) => {
+        console.log(socket.id);
+      });
+
+      socket.on("receive-message", (message) => {
+        createMessage(message);
+      });
+
+
+      const serverList = document.querySelector("#users")
+
+      socket.on("add-server", (id) => {
+        var serverOption = document.createElement("option")
+        serverOption.value = 1;
+        serverOption.innerHTML = id;
+        serverList.appendChild(serverOption)
+      });
+
+      var toServerBtn = document.querySelector("#alert-server").addEventListener("click", (click) => {
+        console.log(serverList)
+        console.log(serverList.options[serverList.selectedIndex].text)
+        socket.emit("direct-message", serverList.options[serverList.selectedIndex].text, "This is a specific message")
+
+      })
+
+      socket.on("inner-direct-message", () => {
+        document.querySelector("#notice").innerText = "This message is beamed into your mind"
+      })
+      
+
 
       // Join a channel
       var room = "test";

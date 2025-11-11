@@ -2,6 +2,7 @@ const platform = require('platform')
 const express = require("express");
 const socketIO = require("socket.io");
 const path = require("path");
+const http = require("http");
 
 const PORT = process.env.PORT || 3000;
 const INDEX = path.join(__dirname, 'index.html');
@@ -12,6 +13,14 @@ const INDEX = path.join(__dirname, 'index.html');
    .use((req, res) => res.sendFile(INDEX) )
   .listen(PORT, () => console.log("Listening on localhost" + PORT));
  const io = socketIO(server);
+
+//  const app = express()
+//  const server2 = http.createServer(app)
+//  const io2 = new socketIO(server);
+
+// app.get('/chefPage', (req, res) => {
+//   res.sendFile(__dirname + '/chefPage.html');
+//  })
 
 // let device = '';
 
@@ -45,11 +54,25 @@ io.on("connection", function(socket) {
   socket.on("join", function (room) {
     // join channel provided by client
     socket.join(room)
+    console.log(socket.id + " Successfully joined a room")
     // Register "image" events, sent by the client
+
+    
+    socket.broadcast.to(room).emit("add-server", socket.id)
+    
+
     socket.on("image", function(msg) {
       // Broadcast the "image" event to all other clients in the room
       socket.broadcast.to(room).emit("image", msg);
     });
+    socket.on("send-message", (message) => {
+      socket.broadcast.to(room).emit("receive-message", socket.id + " " + message)
+    })
+
+
+    socket.on("direct-message", (id, message) => {
+      socket.to(id).emit("inner-direct-message", message)
+    })
   })
 });
 

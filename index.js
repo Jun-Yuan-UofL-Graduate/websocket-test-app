@@ -1,80 +1,198 @@
-const platform = require('platform')
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 const express = require("express");
-const socketIO = require("socket.io");
-const path = require("path");
-const http = require("http");
 
-const PORT = process.env.PORT || 3000;
-const INDEX = path.join(__dirname, 'index.html');
-//const CHEFPATH = path.join(__dirname, 'chefPage.html');
+app.get("/", function(req, res){
+  res.sendFile(__dirname + "/public/index.html");
+});
+app.use(express.static(__dirname + '/public'));
 
+const map = new Map();
 
- const server = express()
-   .use((req, res) => res.sendFile(INDEX) )
-  .listen(PORT, () => console.log("Listening on localhost" + PORT));
- const io = socketIO(server);
-
-//  const app = express()
-//  const server2 = http.createServer(app)
-//  const io2 = new socketIO(server);
-
-// app.get('/chefPage', (req, res) => {
-//   res.sendFile(__dirname + '/chefPage.html');
-//  })
-
-// let device = '';
-
-//     if (navigator.userAgent.match(/Android/i)
-//         || navigator.userAgent.match(/webOS/i)
-//         || navigator.userAgent.match(/Windows Phone/i)) {
-//         device = true;
-//     } else {
-//         device = false;
-//     }
-//     console.log(device);
-
-
-// console.log(platform.isMobile)
-// if (device) {
-//   const server = express()
-//    .use((req, res) => res.sendFile(CHEFPATH) )
-//   .listen(PORT, () => console.log("Listening on localhost" + PORT));
-//  const io = socketIO(server);
-//   console.log("Mobile device detected");
-// } else {
-// const server = express()
-//    .use((req, res) => res.sendFile(INDEX) )
-//   .listen(PORT, () => console.log("Listening on localhost" + PORT));
-//  const io = socketIO(server);
-//   console.log("Desktop device detected");
-// }
-
-io.on("connection", function(socket) {
-  // Register "join" events, requested by a connected client
+io.on('connection', function(socket){
+    // Register "join" events, requested by a connected client
   socket.on("join", function (room) {
     // join channel provided by client
     socket.join(room)
+
     console.log(socket.id + " Successfully joined a room")
     // Register "image" events, sent by the client
 
     
-    socket.broadcast.to(room).emit("add-server", socket.id)
-    
-
-    socket.on("image", function(msg) {
-      // Broadcast the "image" event to all other clients in the room
-      socket.broadcast.to(room).emit("image", msg);
+    socket.on("server_login", (socketID) => {
+      map.set("Server " + socketID, socket.id)
+      //socket.broadcast.to(room).emit("add-server", socket.id);
+      socket.broadcast.to(room).emit("add_server", "Server " + socketID);
     });
-    socket.on("send-message", (message) => {
-      socket.broadcast.to(room).emit("receive-message", socket.id + " " + message)
+
+    socket.on("send_message", (message) => {
+      // socket.broadcast.to(room).emit("receive_message", socket.id + " " + message)
+      socket.broadcast.to(room).emit("receive_message", message)
+    })
+
+    socket.on("direct_message", (id, message) => {
+      //map.get(id)
+      socket.to(map.get(id)).emit("inner_direct_message", message)
     })
 
 
-    socket.on("direct-message", (id, message) => {
-      socket.to(id).emit("inner-direct-message", message)
-    })
+    //// Broadcast the "image" event to all other clients in the room
+    // socket.on("image", function(msg) {
+    //   socket.broadcast.to(room).emit("image", msg);
+    // });
   })
 });
+
+http.listen(3000, function(){
+  console.log('listening on *:3000')
+});
+
+// const platform = require('platform')
+// const path = require("path");
+// const express = require("express");
+// const http = require("https");
+// const socketIO = require("socket.io");
+
+// const PORT = process.env.PORT || 3000;
+// //const INDEX = path.join(__dirname, 'index.html');
+// //const INDEX = path.join(__dirname, 'index.html');
+// //const INDEX = express.static(path.join(__dirname, 'public'));
+
+
+//   const server = express()
+
+
+// var express = require('express');
+// var path = require('path');
+// var app = express();
+// app.use(express.static(path.join(__dirname, 'public')));
+
+//    .use((req, res) => res.sendFile(INDEX) )
+//   .listen(PORT, () => console.log("Listening on localhost" + PORT));
+
+
+// server.use(express.static(path.join(__dirname, 'public')))
+// server.get("/", function(req, res) {
+//   res.sendFile(__dirname + "/index.html");
+// });
+
+// const io = socketIO(http);
+
+
+// const map = new Map();
+
+// io.on("connection", function(socket) {
+//   // Register "join" events, requested by a connected client
+//   socket.on("join", function (room) {
+//     // join channel provided by client
+//     socket.join(room)
+
+//     console.log(socket.id + " Successfully joined a room")
+//     // Register "image" events, sent by the client
+
+    
+//     socket.on("server_login", (socketID) => {
+//       map.set("Server " + socketID, socket.id)
+//       //socket.broadcast.to(room).emit("add-server", socket.id);
+//       socket.broadcast.to(room).emit("add_server", "Server " + socketID);
+//     });
+
+//     socket.on("send_message", (message) => {
+//       socket.broadcast.to(room).emit("receive_message", socket.id + " " + message)
+//     })
+
+//     socket.on("direct_message", (id, message) => {
+//       //map.get(id)
+//       socket.to(map.get(id)).emit("inner_direct_message", message)
+//     })
+
+
+//     //// Broadcast the "image" event to all other clients in the room
+//     // socket.on("image", function(msg) {
+//     //   socket.broadcast.to(room).emit("image", msg);
+//     // });
+//   })
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const platform = require('platform')
+// const express = require("express");
+// const socketIO = require("socket.io");
+// const path = require("path");
+// const http = require("http");
+
+// const PORT = process.env.PORT || 3000;
+// const INDEX = path.join(__dirname, 'index.html');
+// //const INDEX = path.join(__dirname, 'index.html');
+// //const INDEX = express.static(path.join(__dirname, 'public'));
+
+//  const server = express()
+//    .use((req, res) => res.sendFile(INDEX) )
+//   .listen(PORT, () => console.log("Listening on localhost" + PORT));
+//  const io = socketIO(server);
+
+
+// const map = new Map();
+
+// io.on("connection", function(socket) {
+//   // Register "join" events, requested by a connected client
+//   socket.on("join", function (room) {
+//     // join channel provided by client
+//     socket.join(room)
+
+//     console.log(socket.id + " Successfully joined a room")
+//     // Register "image" events, sent by the client
+
+    
+//     socket.on("server_login", (socketID) => {
+//       map.set("Server " + socketID, socket.id)
+//       //socket.broadcast.to(room).emit("add-server", socket.id);
+//       socket.broadcast.to(room).emit("add_server", "Server " + socketID);
+//     });
+
+//     socket.on("send_message", (message) => {
+//       socket.broadcast.to(room).emit("receive_message", socket.id + " " + message)
+//     })
+
+//     socket.on("direct_message", (id, message) => {
+//       //map.get(id)
+//       socket.to(map.get(id)).emit("inner_direct_message", message)
+//     })
+
+
+//     //// Broadcast the "image" event to all other clients in the room
+//     // socket.on("image", function(msg) {
+//     //   socket.broadcast.to(room).emit("image", msg);
+//     // });
+//   })
+// });
+
+
+
+
+
+
+
+
+
 
 
 //const express = require('express'); //requires express module

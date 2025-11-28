@@ -2,9 +2,13 @@
     
 }
 
+.page_header{
+  padding: 0 20%;
+  background-color: green;
+}
+
 h1{
     color:red;
-    background-color: green;
     margin: 0;
 }
 
@@ -97,14 +101,14 @@ form input, #server_number{
 
 
 #message_log{
-  height: 500px;
+  height: 45vh;
   width: 80%;
   overflow-y: scroll;
   border: 2px solid #1734c2;
   margin: auto;
 }
 
-.page-body{
+.page_body{
     height: 90%;
 }
 
@@ -161,7 +165,7 @@ select {
   padding: 0.5em 3.5em 0.5em 1em;
 
   /* reset */
-
+  height: 48px;
   margin: 0;      
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -203,4 +207,8 @@ select {
   background-repeat: no-repeat;
   border-color: grey;
   outline: 0;
+} */
+
+/* .welcome_message{
+  margin: 0 auto;
 } */

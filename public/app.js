@@ -172,7 +172,7 @@ let device = '';
         document.querySelector("#notice").innerText = ""
         document.querySelector("#server_login").style.display = "none";
         serverID = document.querySelector("#server_number").value;
-        document.querySelector("#welcome_message").innerHTML = "Welcome Back to the Restaurant Server " + serverID;
+        document.querySelector(".welcome_message").innerHTML = "Welcome Back Server " + serverID;
         socket.emit("server_login", serverID)
       })
 

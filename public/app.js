@@ -17,7 +17,7 @@ let device = '';
 
 
 
-    var debugMode = true;
+    var debugMode = false;
 
     if(debugMode == false){
       if(device == true){
@@ -50,90 +50,114 @@ let device = '';
       function createOrder(){
         var order = [];
         var item = "";
-        
+        var emptyField = 0;
+        var okOrder = true;
 
         for (i = 1; i < menuSize + 1; i++){
           var menuItem = document.querySelector("#item_" + i.toString()).value;
           var labelItem = document.querySelector("#label_" + i.toString()).innerHTML;
 
-          if(menuItem != ""){
-            labelItem = labelItem.slice(0, -2)
-            console.log(menuItem + " x " + labelItem)
-            order.push(menuItem + " x " + labelItem)
-          }
+          if(menuItem < 0){
+            document.querySelector("#notice").innerText = "Invalid Menu Item detected"
+            console.log("Invalid Menu Item detected")
+            okOrder = false;
+            break;
+          }else{
+            if(menuItem != "" && menuItem != 0){
+              labelItem = labelItem.slice(0, -2)
+              console.log(menuItem + " x " + labelItem)
+              order.push(menuItem + " x " + labelItem)
+            }else{
+              emptyField++;
+            }
+          }  
           
         }
         
+        if(emptyField == menuSize){
+          okOrder = false;
+          document.querySelector("#notice").innerText = "Cannot send empty order";
+          console.log("Cannot send empty order")
+        }
         console.log(order)
 
-        return order;
+        if(okOrder){
+            var orderUp = {
+              "Server": document.querySelector("#server_number").value,
+              "Table": table.options[table.selectedIndex].text,
+              "Order": order,
+              "Notes": chefNotes.value
+            }
+            document.querySelector("#notice").innerText = "";
+            console.log(orderUp);
+            socket.emit("send_message", JSON.stringify(orderUp));
+            menu.reset();
+            table.value = "";
+        }
+
+        // return order;
       }
 
-      function createMessage(text, ownMessage = false) {
-        //console.log("Gonna create message: " + text)
-
-        // const messageElement = document.createElement("div");
-        const messageElement = document.createElement("ul");
-        messageElement.className = "chat_message";
-
-        //const subMesssageElement = document.createElement("div");
-
-        const subMesssageElement = document.createElement("div");
-        subMesssageElement.className =
-          "px-4 py-4 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600";
-        if (ownMessage) {
-          subMesssageElement.className += " float-right bg-blue-800 text-white";
-        }
-        subMesssageElement.innerText = text;
-        messageElement.appendChild(subMesssageElement);
-
+      function createMessage(text) {
+        tempText = JSON.parse(text)
         
+        const containerElement = document.createElement("div");
+        containerElement.className = "container"
 
-        messageBox.appendChild(messageElement);
+        const orderElement = document.createElement("div");
+        orderElement.className = "header"
+        orderElement.textContent = "Server " + tempText.Server;
+        const headerElement = document.createElement("div")
+        headerElement.className = "menu"
+        headerElement.textContent = tempText.Table;
 
-        //subMesssageElement.innerText = "How is this?";
-        //messageElement.appendChild(subMesssageElement)
+        const tableElement = document.createElement("div");
+        tableElement.className = "content"
+        const h2MenuElement = document.createElement("h2");
+        h2MenuElement.textContent = "Order"
+        const ulMenuElement = document.createElement("ul");
+        for(i = 0; i < tempText.Order.length; i++){
+          const liMenuElement = document.createElement("li");
+          liMenuElement.textContent = tempText.Order[i]
+          ulMenuElement.appendChild(liMenuElement);
+        }
+        tableElement.appendChild(h2MenuElement);
+        tableElement.appendChild(ulMenuElement)
+
+        const footerElement = document.createElement("div");
+        footerElement.className = "footer"
+        const h3FooterElement = document.createElement("h2");
+        h3FooterElement.textContent = "Notes to the Chef"
+        const pFooterElement = document.createElement("p");
+        pFooterElement.textContent = tempText.Notes
+        footerElement.appendChild(h3FooterElement)
+        footerElement.appendChild(pFooterElement)
+
+        containerElement.appendChild(orderElement)
+        containerElement.appendChild(headerElement)
+        containerElement.appendChild(tableElement)
+        containerElement.appendChild(footerElement)
+
+        messageBox.appendChild(containerElement)
       }
 
       var chefBtn = document.querySelector("#chef_button").addEventListener("click", () => {
-        if(table.value == ""){
-          console.log("Error! No table selected")
-          document.querySelector("#notice").innerText = "Error! Select a table"
+        if(document.querySelector("#server_number").value == ""){
+          console.log("Error! Server not logged in!");
+          document.querySelector("#notice").innerText = "Error! Log in first"
         }else{
-          document.querySelector("#notice").innerText = ""
-          console.log(table.value)
-          console.log(table.options[table.selectedIndex].text)
-        console.log("Send to Chef")
-        var holdThis = createOrder();
-        //console.log(holdThis);
-
+          if(table.value == ""){
+            console.log("Error! No table selected")
+            document.querySelector("#notice").innerText = "Error! Select a table"
+          }else{
+            createOrder();
+          }
+        }
 
         // const testPack = document.createElement("input");
         // testPack.type="checkbox"
         // testPack.className = "checkBox";
         // messageBox.appendChild(testPack)
-
-          // console.log(serverID = document.querySelector("#server_number").value);
-          // console.log(document.querySelector("#server_number").value);
-          socket.emit("send_message", "Server " + document.querySelector("#server_number").value);
-          createMessage("Server " + document.querySelector("#server_number").value)
-
-          socket.emit("send_message", table.options[table.selectedIndex].text)
-          createMessage(table.options[table.selectedIndex].text, true);
-
-          for (i = 0; i < holdThis.length; i ++){
-            socket.emit("send_message", holdThis[i])
-            createMessage(holdThis[i], true)
-          }
-
-          if (chefNotes.value != "" ){
-            socket.emit("send_message", chefNotes.value);
-            createMessage(chefNotes.value, true);
-          }
-
-          menu.reset();
-          table.value = "";
-        }
 
       });
       
@@ -145,6 +169,7 @@ let device = '';
       })
 
       var serverLoginBtn = document.querySelector("#server_submit").addEventListener("click", (click) => {
+        document.querySelector("#notice").innerText = ""
         document.querySelector("#server_login").style.display = "none";
         serverID = document.querySelector("#server_number").value;
         document.querySelector("#welcome_message").innerHTML = "Welcome Back to the Restaurant Server " + serverID;
@@ -171,7 +196,7 @@ let device = '';
       
 
       socket.on("inner_direct_message", () => {
-        document.querySelector("#notice").innerText = "This message is beamed into your mind"
+        document.querySelector("#notice").innerText = "Your order is ready for pickup"
       })
       
 

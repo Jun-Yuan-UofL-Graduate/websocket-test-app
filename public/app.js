@@ -106,10 +106,15 @@ let device = '';
 
         const orderElement = document.createElement("div");
         orderElement.className = "header"
-        orderElement.textContent = "Server " + tempText.Server;
+        const h2OrderElement = document.createElement("h2")
+        h2OrderElement.textContent = "Server " + tempText.Server;
+        orderElement.appendChild(h2OrderElement)
+
         const headerElement = document.createElement("div")
         headerElement.className = "menu"
-        headerElement.textContent = tempText.Table;
+        const h2HeaderElement = document.createElement("h2");
+        h2HeaderElement.textContent = tempText.Table;
+        headerElement.appendChild(h2HeaderElement)
 
         const tableElement = document.createElement("div");
         tableElement.className = "content"

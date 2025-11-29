@@ -24,6 +24,23 @@ h1{
     display: flex;
 }
 
+/* #menu{
+  display: flex;
+} */
+
+.menu_item{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 5px 0;
+}
+
+.menu_item input{
+  width: 100px;
+  
+}
+
 #part1 #part2{
     width: 45%;
     /* float:left; */
@@ -39,6 +56,8 @@ html body{
 
 #notice{
     color:red;
+    font-weight: bold;
+    font-size: larger;
 }
 
 #mobile_UI, #desktop_UI{
@@ -101,7 +120,7 @@ form input, #server_number{
 
 
 #message_log{
-  height: 45vh;
+  height: 50vh;
   width: 80%;
   overflow-y: scroll;
   border: 2px solid #1734c2;

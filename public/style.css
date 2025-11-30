@@ -1,5 +1,7 @@
 @media screen and (max-width: 500px){
-    
+    body{
+      width: 430px;
+    }
 }
 
 .page_header{
@@ -60,10 +62,10 @@ html body{
     font-size: larger;
 }
 
-#mobile_UI, #desktop_UI{
-    /* background-color: blue; */
-    /* padding: 2%; */
-}
+/* #mobile_UI, #desktop_UI{
+    background-color: blue;
+    padding: 2%;
+} */
 
 button{
     

@@ -1,20 +1,14 @@
-@media screen and (max-width: 500px){
-    /* body{
-      width: 430px;
-    } */
-}
-
 .page_header{
-  padding: 0 20%;
-  background-color: green;
+  padding: 0 5%;
+  background-color: lightblue;
 }
 
 h1{
-    color:red;
+    color:#1734c2;
     margin: 0;
 }
 
-#order-ticket{
+/* #order-ticket{
     width: 80%;
     text-align: center;
     border: 2px solid #73AD21;
@@ -24,10 +18,6 @@ h1{
 #ticket-info{
     justify-content: center;
     display: flex;
-}
-
-/* #menu{
-  display: flex;
 } */
 
 .menu_item{
@@ -44,83 +34,69 @@ h1{
 }
 
 #part1 #part2{
-    width: 45%;
-    /* float:left; */
+  width: 45%;
 }
 
 html body{
-    /* width: 100%; */
-    /* width: 80%; */
-    /* height: 100%; */
-    text-align: center;
-    /* overflow: hidden; */
-    margin: 0;
+  text-align: center;
+  margin: 0;
 }
 
 #notice{
-    color:red;
-    font-weight: bold;
-    font-size: larger;
+  color:red;
+  font-weight: bold;
+  font-size: larger;
 }
 
-/* #mobile_UI, #desktop_UI{
-    background-color: blue;
-    padding: 2%;
-} */
-
 button{
-    
-                    display: inline-block;
-                    outline: none;
-                    cursor: pointer;
-                    font-size: 14px;
-                    line-height: 1;
-                    border-radius: 500px;
-                    transition-property: background-color,border-color,color,box-shadow,filter;
-                    transition-duration: .3s;
-                    border: 1px solid transparent;
-                    letter-spacing: 2px;
-                    min-width: 160px;
-                    text-transform: uppercase;
-                    white-space: normal;
-                    font-weight: 700;
-                    text-align: center;
-                    padding: 17px 48px;
-                    color: #fff;
-                    background-color: #1ED760;
-                    height: 48px;
-                    margin-top: 5px;
-                    :hover{
-                        transform: scale(1.04);
-                        background-color: #21e065;
-                    }
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  border-radius: 500px;
+  transition-property: background-color,border-color,color,box-shadow,filter;
+  transition-duration: .3s;
+  border: 1px solid transparent;
+  letter-spacing: 2px;
+  min-width: 160px;
+  text-transform: uppercase;
+  white-space: normal;
+  font-weight: 700;
+  text-align: center;
+  padding: 17px 48px;
+  color: #fff;
+  background-color: #1ED760;
+  height: 48px;
+  margin-top: 5px;
+  :hover{
+    transform: scale(1.04);
+    background-color: #21e065;
+  }
                 
 }
 
 form input, #server_number{
-    
-                padding: 6px 12px;
-                font-size: 16px;
-                font-weight: 400;
-                line-height: 1.5;
-                color: #212529;
-                background-color: #fff;
-                background-clip: padding-box;
-                border: 1px solid #ced4da;
-                appearance: none;
-                border-radius: 4px;
-                transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-                :focus{
-                    color: #212529;
-                    background-color: #fff;
-                    border-color: #86b7fe;
-                    outline: 0;
-                    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
-                }
+  padding: 6px 12px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  appearance: none;
+  border-radius: 4px;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  :focus{
+    color: #212529;
+    background-color: #fff;
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+  }
                 
 }
-
-
 
 #message_log{
   height: 50vh;
@@ -176,7 +152,6 @@ form input, #server_number{
 
 
 select {
-
   /* styling */
   background-color: white;
   border: thin solid blue;
@@ -192,45 +167,4 @@ select {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-
-
-  /* arrows */
-  /* background-image:
-    linear-gradient(45deg, transparent 50%, blue 50%),
-    linear-gradient(135deg, blue 50%, transparent 50%),
-    linear-gradient(to right, skyblue, skyblue);
-  background-position:
-    calc(100% - 20px) calc(1em + 2px),
-    calc(100% - 15px) calc(1em + 2px),
-    100% 0;
-  background-size:
-    5px 5px,
-    5px 5px,
-    2.5em 2.5em;
-  background-repeat: no-repeat; */
-
 }
-
-
-
-/* select:focus {
-  background-image:
-    linear-gradient(45deg, white 50%, transparent 50%),
-    linear-gradient(135deg, transparent 50%, white 50%),
-    linear-gradient(to right, gray, gray);
-  background-position:
-    calc(100% - 15px) 1em,
-    calc(100% - 20px) 1em,
-    100% 0;
-  background-size:
-    5px 5px,
-    5px 5px,
-    2.5em 2.5em;
-  background-repeat: no-repeat;
-  border-color: grey;
-  outline: 0;
-} */
-
-/* .welcome_message{
-  margin: 0 auto;
-} */

@@ -1,35 +1,33 @@
 
-
 let device = '';
 
-    if (navigator.userAgent.match(/Android/i)
-        || navigator.userAgent.match(/webOS/i)
-        || navigator.userAgent.match(/iPhone/i)
-        || navigator.userAgent.match(/iPad/i)
-        || navigator.userAgent.match(/iPod/i)
-        || navigator.userAgent.match(/BlackBerry/i)
-        || navigator.userAgent.match(/Windows Phone/i)) {
-        device = true;
-    } else {
-        device = false;
-    }
-    console.log(device);
+if (navigator.userAgent.match(/Android/i)
+  || navigator.userAgent.match(/webOS/i)
+  || navigator.userAgent.match(/iPhone/i)
+  || navigator.userAgent.match(/iPad/i)
+  || navigator.userAgent.match(/iPod/i)
+  || navigator.userAgent.match(/BlackBerry/i)
+  || navigator.userAgent.match(/Windows Phone/i)) 
+  {
+    device = true;
+  } else {
+      device = false;
+  }
 
+var debugMode = false;
 
+if(debugMode == false)
+  {
+  if(device == true){
+    var elements = document.querySelector("#desktop_UI");
+    elements.style.display = 'none';
+  }else{
+    var elements = document.querySelector("#mobile_UI");
+    elements.style.display = 'none';
+  }
+}
 
-    var debugMode = false;
-
-    if(debugMode == false){
-      if(device == true){
-            var elements = document.querySelector("#desktop_UI");
-                  elements.style.display = 'none';
-      }else{
-            var elements = document.querySelector("#mobile_UI");
-                  elements.style.display = 'none';
-      }
-    }
-
-      // Get WebSocket
+// Get WebSocket
       //var socket = io("https://websocket-test-app.onrender.com");
       var socket = io();
 
@@ -42,14 +40,14 @@ let device = '';
       var output = document.getElementById("output");
 
       const messageBox = document.querySelector("#message_log");
-      var chefNotes = document.getElementById("chef_notes");
+      var chefNotes = document.querySelector("#chef_notes");
       var table = document.querySelector("#tables");
       const menuSize = document.querySelectorAll('#menu .menu_item').length
       const menu = document.querySelector("#menu");
+      const serverList = document.querySelector("#users")
 
       function createOrder(){
         var order = [];
-        var item = "";
         var emptyField = 0;
         var okOrder = true;
 
@@ -94,8 +92,6 @@ let device = '';
             menu.reset();
             table.value = "";
         }
-
-        // return order;
       }
 
       function createMessage(text) {
@@ -159,11 +155,6 @@ let device = '';
           }
         }
 
-        // const testPack = document.createElement("input");
-        // testPack.type="checkbox"
-        // testPack.className = "checkBox";
-        // messageBox.appendChild(testPack)
-
       });
       
       var toServerBtn = document.querySelector("#alert_server").addEventListener("click", (click) => {
@@ -189,43 +180,12 @@ let device = '';
         createMessage(message);
       });
 
-
-      const serverList = document.querySelector("#users")
-
       socket.on("add_server", (id) => {
         var serverOption = document.createElement("option")
         serverOption.innerHTML = id;
         serverList.appendChild(serverOption)
       });
 
-      
-
       socket.on("inner_direct_message", () => {
         document.querySelector("#notice").innerText = "Your order is ready for pickup"
       })
-      
-
-
-      
-
-      // // Listen to file input events
-      // document.getElementById("input").addEventListener("change", function (event) {
-
-      //   // Prepeare file reader
-      //   var file = event.target.files[0];
-      //   var fileReader = new FileReader();
-
-      //   fileReader.onloadend = function (event) {
-      //     // Send an image event to the socket
-      //     var image = event.target.result
-      //     output.src = image;
-      //     socket.emit("image", image);
-      //   };
-
-      //   // Read file
-      //   fileReader.readAsDataURL(file);
-      // })
-
-      // socket.on("image", function (image) {
-      //   output.src = image;
-      // });

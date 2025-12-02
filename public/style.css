@@ -99,7 +99,7 @@ form input, #server_number{
 }
 
 #message_log{
-  height: 50vh;
+  height: 55vh;
   width: 80%;
   overflow-y: scroll;
   border: 2px solid #1734c2;

@@ -113,40 +113,40 @@ form input, #server_number{
 .container {
   display: grid;
   grid-template-areas:
-    "header menu"
-    "content footer";
+    "serverGrid tableGrid"
+    "menuGrid notesGrid";
   grid-template-columns: 2fr 2fr;
   gap: 3px;
   background-color: dodgerblue;
   padding: 5px;
-  width: 60%;
+  width: 70%;
   margin: 0px auto 5px;
 }
 .container div {
   background-color: white;
   padding: 10px;
 }
-.container div.header {
-  grid-area: header;
+.container div.serverGrid {
+  grid-area: serverGrid;
   text-align: center;
 }
-.container div.menu {
-  grid-area: menu;
+.container div.tableGrid {
+  grid-area: tableGrid;
   text-align: center;
 }
-.container div.content {
-  grid-area: content;
+.container div.menuGrid {
+  grid-area: menuGrid;
   text-align: left;
 }
-.container div.content h2{
+.container div.menuGrid h2{
     text-align: center;
 }
 
-.container div.content li{
-  font-size: 20px;
+.container div.menuGrid li{
+  font-size: 18px;
 }
-.container div.footer {
-  grid-area: footer;
+.container div.notesGrid {
+  grid-area: notesGrid;
   text-align: center;  
 }
 

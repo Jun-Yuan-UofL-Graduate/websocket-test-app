@@ -12,7 +12,7 @@ if (navigator.userAgent.match(/Android/i)
     device = true;
   } else {
       device = false;
-  }
+  } 
 
 var debugMode = false;
 
@@ -36,15 +36,13 @@ if(debugMode == false)
       socket.emit("join", room);
       
       // Get DOM elements
-      var input = document.getElementById("input");
-      var output = document.getElementById("output");
-
-      const messageBox = document.querySelector("#message_log");
-      var chefNotes = document.querySelector("#chef_notes");
-      var table = document.querySelector("#tables");
-      const menuSize = document.querySelectorAll('#menu .menu_item').length
+      const table = document.querySelector("#tables");
       const menu = document.querySelector("#menu");
-      const serverList = document.querySelector("#users")
+      const chefNotes = document.querySelector("#chef_notes");
+      
+      const messageBox = document.querySelector("#message_log");
+      const menuSize = document.querySelectorAll('#menu .menu_item').length;
+      const serverList = document.querySelector("#users");
 
       function createOrder(){
         var order = [];
@@ -87,33 +85,33 @@ if(debugMode == false)
               "Notes": chefNotes.value
             }
             document.querySelector("#notice").innerText = "";
-            console.log(orderUp);
+            //console.log(orderUp);
             socket.emit("send_message", JSON.stringify(orderUp));
             menu.reset();
             table.value = "";
         }
       }
 
-      function createMessage(text) {
+      function createOrderTicket(text) {
         tempText = JSON.parse(text)
         
         const containerElement = document.createElement("div");
         containerElement.className = "container"
 
-        const orderElement = document.createElement("div");
-        orderElement.className = "header"
-        const h2OrderElement = document.createElement("h2")
-        h2OrderElement.textContent = "Server " + tempText.Server;
-        orderElement.appendChild(h2OrderElement)
+        const serverGridElement = document.createElement("div");
+        serverGridElement.className = "serverGrid"
+        const h2serverGridElement = document.createElement("h2")
+        h2serverGridElement.textContent = "Server " + tempText.Server;
+        serverGridElement.appendChild(h2serverGridElement)
 
-        const headerElement = document.createElement("div")
-        headerElement.className = "menu"
-        const h2HeaderElement = document.createElement("h2");
-        h2HeaderElement.textContent = tempText.Table;
-        headerElement.appendChild(h2HeaderElement)
+        const tableGridElement = document.createElement("div")
+        tableGridElement.className = "tableGrid"
+        const h2tableGridElement = document.createElement("h2");
+        h2tableGridElement.textContent = tempText.Table;
+        tableGridElement.appendChild(h2tableGridElement)
 
-        const tableElement = document.createElement("div");
-        tableElement.className = "content"
+        const menuGridElement = document.createElement("div");
+        menuGridElement.className = "menuGrid"
         const h2MenuElement = document.createElement("h2");
         h2MenuElement.textContent = "Order"
         const ulMenuElement = document.createElement("ul");
@@ -122,22 +120,22 @@ if(debugMode == false)
           liMenuElement.textContent = tempText.Order[i]
           ulMenuElement.appendChild(liMenuElement);
         }
-        tableElement.appendChild(h2MenuElement);
-        tableElement.appendChild(ulMenuElement)
+        menuGridElement.appendChild(h2MenuElement);
+        menuGridElement.appendChild(ulMenuElement)
 
-        const footerElement = document.createElement("div");
-        footerElement.className = "footer"
-        const h3FooterElement = document.createElement("h2");
-        h3FooterElement.textContent = "Notes to the Chef"
-        const pFooterElement = document.createElement("p");
-        pFooterElement.textContent = tempText.Notes
-        footerElement.appendChild(h3FooterElement)
-        footerElement.appendChild(pFooterElement)
+        const notesGridElement = document.createElement("div");
+        notesGridElement.className = "notesGrid"
+        const h3notesGridElement = document.createElement("h2");
+        h3notesGridElement.textContent = "Notes to the Chef"
+        const pnotesGridElement = document.createElement("p");
+        pnotesGridElement.textContent = tempText.Notes
+        notesGridElement.appendChild(h3notesGridElement)
+        notesGridElement.appendChild(pnotesGridElement)
 
-        containerElement.appendChild(orderElement)
-        containerElement.appendChild(headerElement)
-        containerElement.appendChild(tableElement)
-        containerElement.appendChild(footerElement)
+        containerElement.appendChild(serverGridElement)
+        containerElement.appendChild(tableGridElement)
+        containerElement.appendChild(menuGridElement)
+        containerElement.appendChild(notesGridElement)
 
         messageBox.appendChild(containerElement)
       }
@@ -157,10 +155,10 @@ if(debugMode == false)
 
       });
       
-      var toServerBtn = document.querySelector("#alert_server").addEventListener("click", (click) => {
-        console.log(serverList)
-        console.log(serverList.options[serverList.selectedIndex].text)
-        socket.emit("direct_message", serverList.options[serverList.selectedIndex].text, "This is a specific message")
+      var alertServerBtn = document.querySelector("#alert_server").addEventListener("click", (click) => {
+        // console.log(serverList)
+        // console.log(serverList.options[serverList.selectedIndex].text)
+        socket.emit("direct_message", serverList.options[serverList.selectedIndex].text, "Your order is ready for pickup")
 
       })
 
@@ -177,7 +175,7 @@ if(debugMode == false)
       });
 
       socket.on("receive_message", (message) => {
-        createMessage(message);
+        createOrderTicket(message);
       });
 
       socket.on("add_server", (id) => {
@@ -186,6 +184,6 @@ if(debugMode == false)
         serverList.appendChild(serverOption)
       });
 
-      socket.on("inner_direct_message", () => {
-        document.querySelector("#notice").innerText = "Your order is ready for pickup"
-      })
+      socket.on("inner_direct_message", (message) => {
+        document.querySelector("#notice").innerText = message
+      });
